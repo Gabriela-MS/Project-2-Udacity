@@ -1,6 +1,8 @@
 # Writen and interpreted at PyCharm CE - Finally a decent interpreter!!!.
 # Writen following Python 3 changes/novelties.
 
+#OLD FILE, PLEASE IGNORE IT AND REFER TO THE RPS.PY FILE#
+
 # coding: utf-8
 
 """This program plays a game of Rock, Paper, Scissors between two Players, """

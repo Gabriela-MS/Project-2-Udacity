@@ -24,31 +24,37 @@ class Player:
         self.pc_move = pc_move
 
 
+def move():
+    while True:
+        human_choice = input('Please choose: rock, paper, or scissors:')
+        if human_choice.lower() not in moves:
+            print('\n !!! ERROR: choice not valid !!!\n')
+            sleep(1.8)
+        else:
+            break
+    return human_choice.lower()
+
+
 class HumanPlayer(Player):
+    # noinspection PyMethodMayBeStatic
     def move(self):
-        while True:
-            human_choice = input('Please choose: rock, paper, or scissors:').lower()
-            if human_choice not in moves:
-                print('\n !!! ERROR: choice not valid !!!\n')
-                sleep(1.8)
-            else:
-                break
-        return human_choice
+        return move()
 
 
 """ A Player that always plays 'rock' """
 
 
 class RockPlayer(Player):
+    # noinspection PyMethodMayBeStatic
     def move(self):
-        return 'rock'
+        return moves[0]
 
 
 """ chooses its move at random.  """
 
 
 class RandomPlayer(Player):
-
+    # noinspection PyMethodMayBeStatic
     def move(self):
         return random.choice(moves)
 
@@ -57,14 +63,13 @@ class RandomPlayer(Player):
 
 
 class ReflectPlayer(Player):
-
     def move(self):
         if self.pc_move == 'paper':
             return 'paper'
         elif self.pc_move == 'scissors':
             return 'scissors'
         else:
-            self.pc_move = 'rock'
+            return 'rock'
 
 
 """ remembers what move it played last round, and cycles through the different moves.
@@ -72,7 +77,6 @@ class ReflectPlayer(Player):
 
 
 class CyclePlayer(Player):
-
     def move(self):
         if self.my_move == 'rock':
             return 'paper'
@@ -81,7 +85,7 @@ class CyclePlayer(Player):
         elif self.my_move == 'scissors':
             return 'rock'
         else:
-            self.my_move = 'rock'
+            return 'rock'
 
 
 def beats(one, two):
@@ -96,7 +100,6 @@ https://www.geeksforgeeks.org/formatted-string-literals-f-strings-python/ """
 
 
 class Game:
-
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
@@ -104,12 +107,12 @@ class Game:
         self.p2_score = 0
 
     def play_round(self):
-        move1 = self.p1.move.lower()
-        move2 = self.p2.move.lower()
+        move1 = self.p1.move()
+        move2 = self.p2.move()
         print(f"You played: {move1} and the computer: {move2} \n")
         sleep(1.0)
-        self.p1.learn()(move1, move2)
-        self.p2.learn()(move2, move1)
+        self.p1.learn(move1, move2)
+        self.p2.learn(move2, move1)
         if beats(move1, move2):
             print(f"In a match between {move1} and {move2}, {move1} WINS! \n")
             sleep(0.7)
